@@ -4,6 +4,7 @@ namespace Umbalaconmeogia\LanguageSwitcher\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Umbalaconmeogia\LanguageSwitcher\Enums\Language;
 
 class LanguageController extends Controller
 {
@@ -12,10 +13,8 @@ class LanguageController extends Controller
      */
     public function switch(Request $request, $locale)
     {
-        $supportedLanguages = config('language-switcher.supported_languages', []);
-        
-        if (array_key_exists($locale, $supportedLanguages)) {
-            session(['locale' => $locale]);
+        if (Language::isSupported($locale)) {
+            session([config('language-switcher.session_key', 'locale') => $locale]);
             app()->setLocale($locale);
         }
         

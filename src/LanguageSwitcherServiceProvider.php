@@ -31,11 +31,28 @@ class LanguageSwitcherServiceProvider extends ServiceProvider
         // Load views
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'language-switcher');
 
+        // Register view composer
+        $this->registerViewComposer();
+
         // Register middleware
         $this->registerMiddleware();
 
         // Register routes
         $this->registerRoutes();
+    }
+
+    /**
+     * Register view composer
+     */
+    private function registerViewComposer(): void
+    {
+        \Illuminate\Support\Facades\View::composer('language-switcher::language-switcher', function ($view) {
+            $view->with([
+                'currentLanguage' => \Umbalaconmeogia\LanguageSwitcher\Enums\Language::getCurrent(),
+                'currentDisplayName' => \Umbalaconmeogia\LanguageSwitcher\Enums\Language::getDisplayName(\Umbalaconmeogia\LanguageSwitcher\Enums\Language::getCurrent()),
+                'supportedLanguages' => \Umbalaconmeogia\LanguageSwitcher\Enums\Language::getSupportedLanguages(),
+            ]);
+        });
     }
 
     /**

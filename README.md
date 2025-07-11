@@ -61,6 +61,32 @@ In your `bootstrap/app.php`:
 ],
 ```
 
+## Language Enum
+
+The package provides a `Language` enum class for easy language management:
+
+```php
+use Umbalaconmeogia\LanguageSwitcher\Enums\Language;
+
+// Get supported languages
+$languages = Language::getSupportedLanguages();
+
+// Get display name for a language code
+$displayName = Language::getDisplayName('ja'); // Returns '日本語'
+
+// Check if language is supported
+$isSupported = Language::isSupported('en'); // Returns true
+
+// Get current application locale
+$current = Language::getCurrent();
+
+// Get default language
+$default = Language::getDefault();
+
+// Check if current language is default
+$isDefault = Language::isCurrentDefault();
+```
+
 ## Middleware
 
 The package includes a `SetLocale` middleware that automatically sets the application locale based on the user's language preference stored in the session. This middleware:

@@ -5,6 +5,7 @@ namespace Umbalaconmeogia\LanguageSwitcher\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Umbalaconmeogia\LanguageSwitcher\Enums\Language;
 
 class SetLocale
 {
@@ -16,12 +17,11 @@ class SetLocale
     public function handle(Request $request, Closure $next): Response
     {
         // Get the locale from session (set by language switcher)
-        $locale = session(config('language-switcher.session_key', 'locale'), config('app.locale'));
+        $locale = session(config('language-switcher.session_key', 'locale'), config('app.locale')) ?? config('app.locale');
         
         // Validate that the locale is supported
-        $supportedLanguages = config('language-switcher.supported_languages', []);
-        if (!array_key_exists($locale, $supportedLanguages)) {
-            $locale = config('language-switcher.default_language', config('app.locale'));
+        if (!Language::isSupported($locale)) {
+            $locale = Language::getDefault();
         }
         
         // Set the application locale

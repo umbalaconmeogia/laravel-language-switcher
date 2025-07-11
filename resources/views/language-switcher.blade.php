@@ -82,15 +82,15 @@
 
 <div class="language-switcher">
     <button class="language-switcher-button">
-        {{ config('language-switcher.supported_languages')[app()->getLocale()] ?? 'Language' }}
+        {{ $currentDisplayName }}
         <span class="language-switcher-arrow">▼</span>
     </button>
     <ul class="language-switcher-menu">
-        @foreach(config('language-switcher.supported_languages') as $code => $name)
+        @foreach($supportedLanguages as $code => $name)
             <li>
                 <form method="POST" action="{{ route('language.switch', $code) }}" style="display: inline;">
                     @csrf
-                    <button type="submit" class="language-switcher-item {{ app()->getLocale() === $code ? 'active' : '' }}">
+                    <button type="submit" class="language-switcher-item {{ $currentLanguage === $code ? 'active' : '' }}">
                         {{ $name }}
                     </button>
                 </form>
