@@ -32,13 +32,25 @@ php artisan vendor:publish --provider="Umbalaconmeogia\LanguageSwitcher\Language
 Route::languageSwitcher();
 ```
 
-### 2. Include the language switcher in your views:
+### 2. Add the middleware to your application (optional but recommended):
+
+In your `bootstrap/app.php`:
+
+```php
+->withMiddleware(function (Middleware $middleware): void {
+    $middleware->web(append: [
+        'setlocale',
+    ]);
+})
+```
+
+### 3. Include the language switcher in your views:
 
 ```php
 @include('language-switcher::language-switcher')
 ```
 
-### 3. Customize supported languages in `config/language-switcher.php`:
+### 4. Customize supported languages in `config/language-switcher.php`:
 
 ```php
 'supported_languages' => [
@@ -49,9 +61,27 @@ Route::languageSwitcher();
 ],
 ```
 
-## Customization
+## Middleware
 
-The package uses simple CSS classes that you can easily override:
+The package includes a `SetLocale` middleware that automatically sets the application locale based on the user's language preference stored in the session. This middleware:
+
+- Reads the locale from the session (set by the language switcher)
+- Validates that the locale is supported
+- Falls back to the default language if an unsupported locale is detected
+- Sets the application locale using `app()->setLocale()`
+
+### Manual Middleware Registration
+
+If you prefer to register the middleware manually, you can add it to your `app/Http/Kernel.php`:
+
+```php
+protected $middlewareAliases = [
+    // ...
+    'setlocale' => \Umbalaconmeogia\LanguageSwitcher\Middleware\SetLocale::class,
+];
+```
+
+## Customization
 
 - `.language-switcher` - Main container
 - `.language-switcher-button` - Button styling

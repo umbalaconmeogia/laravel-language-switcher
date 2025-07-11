@@ -31,8 +31,19 @@ class LanguageSwitcherServiceProvider extends ServiceProvider
         // Load views
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'language-switcher');
 
+        // Register middleware
+        $this->registerMiddleware();
+
         // Register routes
         $this->registerRoutes();
+    }
+
+    /**
+     * Register middleware
+     */
+    private function registerMiddleware(): void
+    {
+        $this->app['router']->aliasMiddleware('setlocale', \Umbalaconmeogia\LanguageSwitcher\Middleware\SetLocale::class);
     }
 
     /**
