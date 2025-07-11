@@ -57,6 +57,51 @@ class Language
     }
 
     /**
+     * Get language detection method
+     */
+    public static function getDetectionMethod(): string
+    {
+        return Config::get('language-switcher.detection_method', 'all');
+    }
+
+    /**
+     * Get URL parameter name
+     */
+    public static function getUrlParameter(): string
+    {
+        return Config::get('language-switcher.url_parameter', 'locale');
+    }
+
+    /**
+     * Check if route prefixing is enabled
+     */
+    public static function isRoutePrefixEnabled(): bool
+    {
+        return Config::get('language-switcher.route_prefix', false);
+    }
+
+    /**
+     * Get cache configuration
+     */
+    public static function getCacheConfig(): array
+    {
+        return Config::get('language-switcher.cache', [
+            'enabled' => true,
+            'ttl' => 3600,
+            'prefix' => 'language_switcher_',
+        ]);
+    }
+
+    /**
+     * Check if caching is enabled
+     */
+    public static function isCachingEnabled(): bool
+    {
+        $config = self::getCacheConfig();
+        return $config['enabled'] ?? true;
+    }
+
+    /**
      * Get all supported language codes
      */
     public static function getSupportedCodes(): array

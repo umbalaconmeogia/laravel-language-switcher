@@ -79,7 +79,87 @@ The Blade component supports a `style` attribute for different style variants:
     'vi' => 'Tiếng Việt',
     'fr' => 'Français',
 ],
+'default_language' => 'en',
+'fallback_language' => 'en',
+'session_key' => 'locale',
+'detection_method' => 'all', // 'session', 'url', 'header', 'all'
+'url_parameter' => 'locale',
+'route_prefix' => false,
+'cache' => [
+    'enabled' => true,
+    'ttl' => 3600,
+    'prefix' => 'language_switcher_',
+],
+'component' => [
+    'default_style' => 'default',
+    'show_flags' => false,
+    'show_language_codes' => false,
+    'dropdown_position' => 'bottom-right',
+    'animation_duration' => 200,
+],
+'middleware' => [
+    'auto_detect' => true,
+    'store_in_session' => true,
+    'redirect_on_change' => false,
+    'exclude_paths' => ['api/*', 'admin/*'],
+],
+'api' => [
+    'enabled' => true,
+    'endpoints' => [
+        'current' => '/api/languages/current',
+        'supported' => '/api/languages/supported',
+        'switch' => '/api/languages/{locale}',
+    ],
+    'response_format' => 'json',
+    'include_metadata' => true,
+],
+'security' => [
+    'csrf_protection' => true,
+    'allowed_domains' => [],
+    'rate_limiting' => [
+        'enabled' => false,
+        'max_attempts' => 10,
+        'decay_minutes' => 1,
+    ],
+],
 ```
+
+## Advanced Configuration
+
+### Language Detection Methods
+
+The package supports multiple language detection methods:
+
+- **Session**: Uses stored session preference
+- **URL**: Uses URL parameter (e.g., `?locale=en`)
+- **Header**: Uses Accept-Language header
+- **All**: Uses all methods in order (session → URL → header)
+
+### Middleware Features
+
+- **Path Exclusion**: Skip language detection for specific paths
+- **Auto Detection**: Automatic language detection from browser
+- **Session Storage**: Store language preference in session
+- **Fallback Handling**: Graceful fallback to default language
+
+### Component Configuration
+
+- **Style Variants**: Default, minimal, compact styles
+- **Dropdown Position**: Configurable dropdown positioning
+- **Animation**: Customizable animation duration
+- **Flags Support**: Optional flag display (future feature)
+
+### Security Features
+
+- **CSRF Protection**: Built-in CSRF protection for language switching
+- **Rate Limiting**: Configurable rate limiting for API endpoints
+- **Domain Restrictions**: Restrict language switching to specific domains
+
+### API Support
+
+- **RESTful Endpoints**: Get current language, supported languages
+- **JSON Responses**: Standardized API responses
+- **Metadata Inclusion**: Optional metadata in API responses
 
 ## Language Enum
 
