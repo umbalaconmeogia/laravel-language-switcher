@@ -46,8 +46,25 @@ In your `bootstrap/app.php`:
 
 ### 3. Include the language switcher in your views:
 
-```php
+Using the Blade component (recommended):
+```blade
+<x-language-switcher::language-switcher />
+```
+
+Or using the include directive (legacy):
+```blade
 @include('language-switcher::language-switcher')
+```
+
+### Component Options
+
+The Blade component supports a `style` attribute for future style variants:
+```blade
+<!-- Default style -->
+<x-language-switcher::language-switcher />
+
+<!-- With custom style (for future implementation) -->
+<x-language-switcher::language-switcher style="minimal" />
 ```
 
 ### 4. Customize supported languages in `config/language-switcher.php`:
