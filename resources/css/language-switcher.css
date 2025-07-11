@@ -1,0 +1,131 @@
+/* Laravel Multilingual Package - Default Styles */
+
+/* Language Switcher Container */
+.multilingual-language-switcher {
+    position: relative;
+    display: inline-block;
+}
+
+/* Trigger Button */
+.multilingual-trigger {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid transparent;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    background-color: #ffffff;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+}
+
+.multilingual-trigger:hover {
+    color: #374151;
+}
+
+.multilingual-trigger:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+/* Current Language Text */
+.multilingual-current {
+    margin-right: 0.25rem;
+}
+
+/* Arrow Icon */
+.multilingual-arrow {
+    display: flex;
+    align-items: center;
+}
+
+.multilingual-arrow svg {
+    width: 1rem;
+    height: 1rem;
+    fill: currentColor;
+}
+
+/* Dropdown Form */
+.multilingual-form {
+    display: block;
+}
+
+/* Language Option Button */
+.multilingual-option {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    text-align: left;
+    font-size: 0.875rem;
+    background: none;
+    border: none;
+    color: #374151;
+    cursor: pointer;
+    transition: background-color 0.15s ease-in-out;
+}
+
+.multilingual-option:hover {
+    background-color: #f3f4f6;
+}
+
+.multilingual-option:focus {
+    outline: none;
+    background-color: #f3f4f6;
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    .multilingual-trigger {
+        background-color: #1f2937;
+        color: #9ca3af;
+    }
+    
+    .multilingual-trigger:hover {
+        color: #d1d5db;
+    }
+    
+    .multilingual-option {
+        color: #d1d5db;
+    }
+    
+    .multilingual-option:hover {
+        background-color: #374151;
+    }
+    
+    .multilingual-option:focus {
+        background-color: #374151;
+    }
+}
+
+/* Minimal Style Variant */
+.multilingual-language-switcher.minimal .multilingual-trigger {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    border: none;
+    background: none;
+}
+
+.multilingual-language-switcher.minimal .multilingual-arrow {
+    display: none;
+}
+
+/* Compact Style Variant */
+.multilingual-language-switcher.compact .multilingual-trigger {
+    padding: 0.375rem 0.5rem;
+    font-size: 0.75rem;
+}
+
+/* Mobile Responsive */
+@media (max-width: 640px) {
+    .multilingual-trigger {
+        padding: 0.375rem 0.5rem;
+        font-size: 0.75rem;
+    }
+    
+    .multilingual-option {
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+    }
+} 
