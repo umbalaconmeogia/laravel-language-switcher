@@ -18,10 +18,30 @@ composer require umbalaconmeogia/laravel-language-switcher
 
 ## Configuration
 
-Publish the configuration file:
+### Quick Setup
+
+Publish all assets and configuration:
 
 ```bash
+php artisan language-switcher:publish
+```
+
+### Selective Publishing
+
+Publish only specific assets:
+
+```bash
+# Configuration only
 php artisan vendor:publish --provider="Umbalaconmeogia\LanguageSwitcher\LanguageSwitcherServiceProvider" --tag="language-switcher-config"
+
+# Views only
+php artisan vendor:publish --provider="Umbalaconmeogia\LanguageSwitcher\LanguageSwitcherServiceProvider" --tag="language-switcher-views"
+
+# CSS assets only
+php artisan vendor:publish --provider="Umbalaconmeogia\LanguageSwitcher\LanguageSwitcherServiceProvider" --tag="language-switcher-assets"
+
+# All assets
+php artisan vendor:publish --provider="Umbalaconmeogia\LanguageSwitcher\LanguageSwitcherServiceProvider" --tag="language-switcher"
 ```
 
 ## Usage
@@ -60,15 +80,17 @@ Or using the include directive (legacy):
 
 The Blade component supports a `style` attribute for different style variants:
 ```blade
-<!-- Default style -->
+<!-- Default style - simple dropdown with hover effect -->
 <x-language-switcher::language-switcher />
 
-<!-- Minimal style - clean and compact -->
+<!-- Minimal style - clean and borderless -->
 <x-language-switcher::language-switcher style="minimal" />
 
-<!-- Compact style - smaller than default -->
+<!-- Compact style - smaller padding and font -->
 <x-language-switcher::language-switcher style="compact" />
 ```
+
+**Note**: The language switcher uses a simple, clean design with inline CSS for maximum compatibility. The dropdown appears on hover and works without JavaScript.
 
 ### 4. Customize supported languages in `config/language-switcher.php`:
 
@@ -160,6 +182,118 @@ The package supports multiple language detection methods:
 - **RESTful Endpoints**: Get current language, supported languages
 - **JSON Responses**: Standardized API responses
 - **Metadata Inclusion**: Optional metadata in API responses
+
+## Enhanced Features
+
+### Console Commands
+
+The package provides several artisan commands for management:
+
+```bash
+# Publish all assets and configuration
+php artisan language-switcher:publish
+
+# List supported languages
+php artisan language-switcher:list
+
+# List languages in different formats
+php artisan language-switcher:list --format=json
+php artisan language-switcher:list --format=csv
+
+# Clear language cache
+php artisan language-switcher:clear-cache
+
+# Clear cache and session data
+php artisan language-switcher:clear-cache --all
+```
+
+### API Endpoints
+
+When API is enabled, the package provides RESTful endpoints:
+
+```bash
+# Get current language information
+GET /api/languages/current
+
+# Get supported languages
+GET /api/languages/supported
+
+# Switch language
+POST /api/languages/{locale}
+```
+
+Example API responses:
+
+```json
+// GET /api/languages/current
+{
+    "current_language": "en",
+    "current_language_name": "English",
+    "timestamp": "2024-01-15T10:30:00.000000Z",
+    "metadata": {
+        "detection_method": "all",
+        "session_key": "locale",
+        "default_language": "en",
+        "fallback_language": "en"
+    }
+}
+
+// GET /api/languages/supported
+{
+    "languages": [
+        {
+            "code": "en",
+            "name": "English",
+            "is_default": true,
+            "is_fallback": true
+        },
+        {
+            "code": "ja",
+            "name": "日本語",
+            "is_default": false,
+            "is_fallback": false
+        }
+    ],
+    "count": 2,
+    "default_language": "en",
+    "fallback_language": "en"
+}
+```
+
+### Event System
+
+The package fires events when languages are changed:
+
+```php
+use Umbalaconmeogia\LanguageSwitcher\Events\LanguageChanged;
+
+// Listen for language changes
+Event::listen(LanguageChanged::class, function (LanguageChanged $event) {
+    Log::info("Language changed from {$event->previousLanguage} to {$event->newLanguage}");
+    
+    // Access user information if available
+    if ($event->user) {
+        Log::info("Changed by user: {$event->user->email}");
+    }
+});
+```
+
+### Conditional Asset Loading
+
+The package automatically loads CSS assets only when needed:
+- Assets are not loaded in console commands
+- Assets are not loaded for API requests
+- Assets can be disabled via configuration
+
+### View Data Sharing
+
+The package automatically shares language data with all views:
+
+```blade
+{{-- Available in all views --}}
+Current language: {{ $currentLanguage }}
+Supported languages: {{ json_encode($supportedLanguages) }}
+```
 
 ## Language Enum
 

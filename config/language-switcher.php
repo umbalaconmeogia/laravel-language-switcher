@@ -113,6 +113,7 @@ return [
         'show_language_codes' => false,
         'dropdown_position' => 'bottom-right', // bottom-right, bottom-left, top-right, top-left
         'animation_duration' => 200, // milliseconds
+        'load_assets' => true, // Whether to automatically load CSS assets
     ],
 
     /*

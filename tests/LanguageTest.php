@@ -18,9 +18,9 @@ class LanguageTest extends TestCase
 
     public function test_get_display_name_returns_correct_name()
     {
-        $this->assertEquals('English', Language::getDisplayName('en'));
-        $this->assertEquals('日本語', Language::getDisplayName('ja'));
-        $this->assertEquals('Tiếng Việt', Language::getDisplayName('vi'));
+        $this->assertSame('English', Language::getDisplayName('en'));
+        $this->assertSame('日本語', Language::getDisplayName('ja'));
+        $this->assertSame('Tiếng Việt', Language::getDisplayName('vi'));
     }
 
     public function test_is_supported_returns_correct_boolean()
@@ -35,30 +35,30 @@ class LanguageTest extends TestCase
     public function test_get_default_returns_configured_default()
     {
         $default = Language::getDefault();
-        $this->assertEquals('en', $default); // Adjust if your config default is different
+        $this->assertSame('en', $default); // Adjust if your config default is different
     }
 
     public function test_get_fallback_returns_configured_fallback()
     {
         $fallback = Language::getFallback();
-        $this->assertEquals('en', $fallback); // Adjust if your config fallback is different
+        $this->assertSame('en', $fallback); // Adjust if your config fallback is different
     }
 
     public function test_get_supported_codes_returns_array_of_codes()
     {
         $codes = Language::getSupportedCodes();
         $this->assertIsArray($codes);
-        $this->assertContains('en', $codes);
-        $this->assertContains('ja', $codes);
-        $this->assertContains('vi', $codes);
+        $this->assertContainsEquals('en', $codes);
+        $this->assertContainsEquals('ja', $codes);
+        $this->assertContainsEquals('vi', $codes);
     }
 
     public function test_get_current_returns_application_locale()
     {
         app()->setLocale('en');
-        $this->assertEquals('en', Language::getCurrent());
+        $this->assertSame('en', Language::getCurrent());
         app()->setLocale('ja');
-        $this->assertEquals('ja', Language::getCurrent());
+        $this->assertSame('ja', Language::getCurrent());
     }
 
     public function test_is_current_default_returns_correct_boolean()

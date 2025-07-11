@@ -21,8 +21,8 @@ class LanguageControllerTest extends TestCase
     {
         $response = $this->post(route('language.switch', ['locale' => 'ja']));
         $response->assertRedirect();
-        $this->assertEquals('ja', session('locale'));
-        $this->assertEquals('ja', app()->getLocale());
+        $this->assertSame('ja', session('locale'));
+        $this->assertSame('ja', app()->getLocale());
     }
 
     public function test_switch_to_unsupported_language_does_not_change_locale()
@@ -31,7 +31,7 @@ class LanguageControllerTest extends TestCase
         app()->setLocale('en');
         $response = $this->post(route('language.switch', ['locale' => 'fr']));
         $response->assertRedirect();
-        $this->assertEquals('en', session('locale'));
-        $this->assertEquals('en', app()->getLocale());
+        $this->assertSame('en', session('locale'));
+        $this->assertSame('en', app()->getLocale());
     }
 } 
