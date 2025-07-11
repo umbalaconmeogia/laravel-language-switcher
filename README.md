@@ -58,13 +58,16 @@ Or using the include directive (legacy):
 
 ### Component Options
 
-The Blade component supports a `style` attribute for future style variants:
+The Blade component supports a `style` attribute for different style variants:
 ```blade
 <!-- Default style -->
 <x-language-switcher::language-switcher />
 
-<!-- With custom style (for future implementation) -->
+<!-- Minimal style - clean and compact -->
 <x-language-switcher::language-switcher style="minimal" />
+
+<!-- Compact style - smaller than default -->
+<x-language-switcher::language-switcher style="compact" />
 ```
 
 ### 4. Customize supported languages in `config/language-switcher.php`:

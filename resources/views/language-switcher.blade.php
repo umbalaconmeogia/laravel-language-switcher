@@ -1,5 +1,5 @@
 <style>
-/* Simple Language Switcher Styles */
+/* Base Language Switcher Styles */
 .language-switcher {
     position: relative;
     display: inline-block;
@@ -78,9 +78,59 @@
     background-color: #4299e1;
     color: white;
 }
+
+/* Minimal Style Variant */
+.language-switcher.minimal .language-switcher-button {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 2px;
+    font-size: inherit;
+    gap: 4px;
+}
+
+.language-switcher.minimal .language-switcher-button:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.language-switcher.minimal .language-switcher-arrow {
+    font-size: 8px;
+}
+
+.language-switcher.minimal .language-switcher-menu {
+    min-width: 100px;
+    padding: 2px 0;
+}
+
+.language-switcher.minimal .language-switcher-item {
+    padding: 4px 8px;
+    font-size: 13px;
+}
+
+/* Compact Style Variant */
+.language-switcher.compact .language-switcher-button {
+    padding: 6px 10px;
+    font-size: 13px;
+    gap: 4px;
+}
+
+.language-switcher.compact .language-switcher-arrow {
+    font-size: 9px;
+}
+
+.language-switcher.compact .language-switcher-menu {
+    min-width: 110px;
+    padding: 3px 0;
+}
+
+.language-switcher.compact .language-switcher-item {
+    padding: 5px 10px;
+    font-size: 13px;
+}
 </style>
 
-<div class="language-switcher">
+<div class="language-switcher {{ $style !== 'default' ? $style : '' }}">
     <button class="language-switcher-button">
         {{ $currentDisplayName }}
         <span class="language-switcher-arrow">▼</span>
